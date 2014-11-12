@@ -1,0 +1,13 @@
+[Unit]
+Description=Neo4j Community
+//After=example-other-service-of-mine.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill neo4j
+ExecStartPre=-/usr/bin/docker rm neo4j
+ExecStart=/usr/bin/docker run -d --name neo4j --privileged -p 7474:7474 -p 1337:1337 -v /home/core:/var/lib/neo4j/data seenickcode/neo4j-community
+
+[Install]
+WantedBy=multi-user.target
